@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "申请成为分销商",
+  "usingComponents": {
+    "popup": "/components/uni-popup",
+    "mpvue-city-picker": "/components/mpvue-citypicker/mpvueCityPicker"
+  }
+}

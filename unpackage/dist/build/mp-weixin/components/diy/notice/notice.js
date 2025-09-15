@@ -1,0 +1,10 @@
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["components/diy/notice/notice"],{"046b":function(t,e,n){"use strict";n.r(e);var i=n("4d62"),a=n.n(i);for(var c in i)["default"].indexOf(c)<0&&function(t){n.d(e,t,(function(){return i[t]}))}(c);e["default"]=a.a},"1d8c":function(t,e,n){"use strict";n.r(e);var i=n("8997"),a=n("046b");for(var c in a)["default"].indexOf(c)<0&&function(t){n.d(e,t,(function(){return a[t]}))}(c);n("7116");var o=n("828b"),u=Object(o["a"])(a["default"],i["b"],i["c"],!1,null,null,null,!1,i["a"],void 0);e["default"]=u.exports},"202a":function(t,e,n){},"4d62":function(t,e,n){"use strict";(function(t){Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var n={data:function(){return{textData:"",n:0,textW:0,start:0,times:null}},props:["itemData"],created:function(){var t=this;this.textData=this.itemData.params.text,this.$nextTick((function(){t.init()})),this.horseRaceLamp()},beforeDestroy:function(){clearTimeout(this.times)},methods:{init:function(){var e=this;t.getSystemInfo({success:function(n){var i=t.createSelectorQuery().in(e).select(".transtext");i.boundingClientRect((function(t){var n=t.width;e.textW=0,e.start=2*n})).exec()}})},horseRaceLamp:function(){var t=this;t.times=setTimeout((function(){t.textW--,-1*t.textW>=t.start&&(t.textW=710),t.horseRaceLamp()}),10)},gotoPages:function(t){this.gotoPage(t.linkUrl)}}};e.default=n}).call(this,n("df3c")["default"])},7116:function(t,e,n){"use strict";var i=n("202a"),a=n.n(i);a.a},8997:function(t,e,n){"use strict";n.d(e,"b",(function(){return i})),n.d(e,"c",(function(){return a})),n.d(e,"a",(function(){}));var i=function(){var t=this.$createElement;this._self._c},a=[]}}]);
+;(global["webpackJsonp"] = global["webpackJsonp"] || []).push([
+    'components/diy/notice/notice-create-component',
+    {
+        'components/diy/notice/notice-create-component':(function(module, exports, __webpack_require__){
+            __webpack_require__('df3c')['createComponent'](__webpack_require__("1d8c"))
+        })
+    },
+    [['components/diy/notice/notice-create-component']]
+]);

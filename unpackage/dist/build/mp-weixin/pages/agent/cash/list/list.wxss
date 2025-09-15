@@ -1,0 +1,1 @@
+.tab-item{font-size:28rpx}.tab-item.active{font-weight:400;font-size:28rpx}.tab-item.active::after{width:57rpx;height:6rpx;background-color:#ff5649}

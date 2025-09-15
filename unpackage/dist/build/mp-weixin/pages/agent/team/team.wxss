@@ -1,0 +1,2 @@
+.top-container .total{height:80rpx;background-color:#fae1df;color:#ff5649;text-align:center}.agent-team-photo,
+.agent-team-photo image{width:80rpx;height:80rpx;border-radius:50%}.tab-item{font-size:28rpx}.tab-item.active{font-weight:400;font-size:28rpx}.tab-item.active::after{width:57rpx;height:6rpx;background-color:#ff5649}

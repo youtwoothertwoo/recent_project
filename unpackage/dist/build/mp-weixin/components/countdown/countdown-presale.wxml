@@ -1,0 +1,1 @@
+<view class="countdown" style="{{('color:'+color)}}"><block wx:if="{{status==2}}">活动已结束</block><block wx:else>{{''+title+''}}<text class="mr10">{{$root.m0+'天'}}</text><text class="f28" style="{{('font-size:'+timeSize+';')}}">{{$root.m1+":"+minute+":"+second}}</text></block></view>

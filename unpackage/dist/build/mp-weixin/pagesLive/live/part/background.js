@@ -1,0 +1,10 @@
+require('../../common/vendor.js');(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pagesLive/live/part/background"],{"0746":function(t,e,n){"use strict";n.d(e,"b",(function(){return i})),n.d(e,"c",(function(){return a})),n.d(e,"a",(function(){}));var i=function(){var t=this,e=t.$createElement;t._self._c;t._isMounted||(t.e0=function(e,n){var i=arguments[arguments.length-1].currentTarget.dataset,a=i.eventParams||i["event-params"];n=a.index;t.img_index=n})},a=[]},"1a9c":function(t,e,n){},"61ca":function(t,e,n){"use strict";var i=n("1a9c"),a=n.n(i);a.a},6988:function(t,e,n){"use strict";n.r(e);var i=n("0746"),a=n("86b2");for(var u in a)["default"].indexOf(u)<0&&function(t){n.d(e,t,(function(){return a[t]}))}(u);n("61ca");var o=n("828b"),c=Object(o["a"])(a["default"],i["b"],i["c"],!1,null,"2e390324",null,!1,i["a"],void 0);e["default"]=c.exports},"86b2":function(t,e,n){"use strict";n.r(e);var i=n("8869"),a=n.n(i);for(var u in i)["default"].indexOf(u)<0&&function(t){n.d(e,t,(function(){return i[t]}))}(u);e["default"]=a.a},8869:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var i={data:function(){return{img_index:0,popupVisible:!1,type:0,listData:[],bg_index:-1}},beforeCreate:function(){},methods:{show:function(){this.popupVisible=!0,this.getData()},getData:function(){var t=this;getApp()._get("live.RoomApply/imageInfo",{},(function(e){t.listData=e.data.list}))},close:function(){this.$emit("close"),this.popupVisible=!1},selectBg:function(t,e){console.log("selectBg"),this.bg_index=e,this.$emit("liveSet",t)},reset:function(){this.img_index=0,this.bg_index=-1,this.$emit("liveSet","")}}};e.default=i}}]);
+;(global["webpackJsonp"] = global["webpackJsonp"] || []).push([
+    'pagesLive/live/part/background-create-component',
+    {
+        'pagesLive/live/part/background-create-component':(function(module, exports, __webpack_require__){
+            __webpack_require__('df3c')['createComponent'](__webpack_require__("6988"))
+        })
+    },
+    [['pagesLive/live/part/background-create-component']]
+]);

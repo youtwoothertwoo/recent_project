@@ -1,0 +1,10 @@
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["components/diy/bargainProduct/bargainProduct"],{"2bac":function(t,n,a){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=void 0;var e={components:{Countdown:function(){a.e("components/countdown/countdown-act").then(function(){return resolve(a("9c3e"))}.bind(null,a)).catch(a.oe)}},data:function(){return{countdownConfig:{startstamp:0,endstamp:0,title:" "}}},props:["itemData"],created:function(){this.countdownConfig.endstamp=this.itemData.data.end_time,this.countdownConfig.startstamp=this.itemData.data.start_time},methods:{scroll:function(t){},gotoList:function(){this.gotoPage("/pages/plus/bargain/list/list")},gotoDetail:function(t){var n="/pages/plus/bargain/detail/detail?bargain_product_id="+t;this.gotoPage(n)}}};n.default=e},"35ef":function(t,n,a){"use strict";a.r(n);var e=a("2bac"),o=a.n(e);for(var i in e)["default"].indexOf(i)<0&&function(t){a.d(n,t,(function(){return e[t]}))}(i);n["default"]=o.a},"3e9c":function(t,n,a){"use strict";a.r(n);var e=a("da66"),o=a("35ef");for(var i in o)["default"].indexOf(i)<0&&function(t){a.d(n,t,(function(){return o[t]}))}(i);a("b0c3");var c=a("828b"),u=Object(c["a"])(o["default"],e["b"],e["c"],!1,null,null,null,!1,e["a"],void 0);n["default"]=u.exports},b0c3:function(t,n,a){"use strict";var e=a("eced"),o=a.n(e);o.a},da66:function(t,n,a){"use strict";a.d(n,"b",(function(){return e})),a.d(n,"c",(function(){return o})),a.d(n,"a",(function(){}));var e=function(){var t=this.$createElement,n=(this._self._c,this.itemData.data.product_list.length);this.$mp.data=Object.assign({},{$root:{g0:n}})},o=[]},eced:function(t,n,a){}}]);
+;(global["webpackJsonp"] = global["webpackJsonp"] || []).push([
+    'components/diy/bargainProduct/bargainProduct-create-component',
+    {
+        'components/diy/bargainProduct/bargainProduct-create-component':(function(module, exports, __webpack_require__){
+            __webpack_require__('df3c')['createComponent'](__webpack_require__("3e9c"))
+        })
+    },
+    [['components/diy/bargainProduct/bargainProduct-create-component']]
+]);

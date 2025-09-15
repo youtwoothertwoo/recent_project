@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "直播商品",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "upload": "/components/upload/upload",
+    "picker-view-datetime": "/components/picker-view-datetime/pickerViewDatetime",
+    "products": "/pages/user/my_shop/my_live/my-live/dialog/Products",
+    "countdown": "/components/countdown/countdown"
+  }
+}

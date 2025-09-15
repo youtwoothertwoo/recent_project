@@ -1,0 +1,1 @@
+<block wx:if="{{!loading}}"><view class="pay-wrap"><view><rich-text nodes="{{content}}"></rich-text></view></view></block>

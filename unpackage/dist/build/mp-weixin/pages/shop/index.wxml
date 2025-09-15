@@ -1,0 +1,1 @@
+<view><block wx:if="{{supplierStatus==0}}"><register vue-id="a932cbd8-1" bind:__l="__l"></register></block><block wx:if="{{supplierStatus==1}}"><application vue-id="a932cbd8-2" bind:__l="__l"></application></block></view>

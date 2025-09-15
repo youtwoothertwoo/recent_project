@@ -1,0 +1,12 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "首页",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "nav-bar": "/components/navBar/navBar",
+    "diy": "/components/diy/diy",
+    "homepush": "/pages/index/home-push/home-push",
+    "uni-load-more": "/components/uni-load-more",
+    "search-product": "/components/searchProduct"
+  }
+}

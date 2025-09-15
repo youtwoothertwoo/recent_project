@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "订单详情",
+  "usingComponents": {
+    "popup": "/components/uni-popup",
+    "mpservice": "/components/mpservice/Mpservice"
+  }
+}

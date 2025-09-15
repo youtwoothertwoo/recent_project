@@ -1,0 +1,10 @@
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["components/diy/seckillProduct/seckillProduct"],{1713:function(t,n,e){"use strict";e.r(n);var o=e("feeb"),i=e("54c9");for(var a in i)["default"].indexOf(a)<0&&function(t){e.d(n,t,(function(){return i[t]}))}(a);e("912c");var c=e("828b"),u=Object(c["a"])(i["default"],o["b"],o["c"],!1,null,null,null,!1,o["a"],void 0);n["default"]=u.exports},"54c9":function(t,n,e){"use strict";e.r(n);var o=e("9af6"),i=e.n(o);for(var a in o)["default"].indexOf(a)<0&&function(t){e.d(n,t,(function(){return o[t]}))}(a);n["default"]=i.a},"912c":function(t,n,e){"use strict";var o=e("92dd"),i=e.n(o);i.a},"92dd":function(t,n,e){},"9af6":function(t,n,e){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=void 0;var o={components:{Countdown:function(){e.e("components/countdown/countdown-act").then(function(){return resolve(e("9c3e"))}.bind(null,e)).catch(e.oe)}},data:function(){return{countdownConfig:{startstamp:0,endstamp:0,title:" "}}},props:["itemData"],created:function(){this.countdownConfig.endstamp=this.itemData.data.end_time,this.countdownConfig.startstamp=this.itemData.data.start_time},methods:{scroll:function(t){},gotoList:function(){this.gotoPage("/pages/plus/seckill/list/list")},gotoDetail:function(t){var n="/pages/product/detail/detail?product_id="+t;this.gotoPage(n)}}};n.default=o},feeb:function(t,n,e){"use strict";e.d(n,"b",(function(){return o})),e.d(n,"c",(function(){return i})),e.d(n,"a",(function(){}));var o=function(){var t=this.$createElement,n=(this._self._c,this.itemData.data.product_list.length);this.$mp.data=Object.assign({},{$root:{g0:n}})},i=[]}}]);
+;(global["webpackJsonp"] = global["webpackJsonp"] || []).push([
+    'components/diy/seckillProduct/seckillProduct-create-component',
+    {
+        'components/diy/seckillProduct/seckillProduct-create-component':(function(module, exports, __webpack_require__){
+            __webpack_require__('df3c')['createComponent'](__webpack_require__("1713"))
+        })
+    },
+    [['components/diy/seckillProduct/seckillProduct-create-component']]
+]);

@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "确认订单",
+  "usingComponents": {
+    "myinfo": "/pages/order/confirm-order/my-info",
+    "coupon": "/pages/order/confirm-order/coupon",
+    "dist": "/pages/order/confirm-order/distr"
+  }
+}

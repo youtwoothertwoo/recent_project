@@ -1,0 +1,2 @@
+.agent-order-photo,
+.agent-order-photo image{width:96rpx;height:96rpx;border-radius:50%}.tab-item{font-size:28rpx}.tab-item.active{font-weight:400;font-size:28rpx}.tab-item.active::after{width:57rpx;height:6rpx;background-color:#ff5649}.item-top{height:54rpx;line-height:54rpx;border-bottom:1rpx solid #eee;color:#999}.item-bottom{height:73rpx;line-height:73rpx;border-top:1rpx solid #eee}.item-center{height:122rpx}

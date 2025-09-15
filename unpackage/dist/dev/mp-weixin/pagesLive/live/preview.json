@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "beauty": "/pagesLive/live/part/beauty",
+    "definition": "/pagesLive/live/part/definition",
+    "background": "/pagesLive/live/part/background"
+  }
+}
