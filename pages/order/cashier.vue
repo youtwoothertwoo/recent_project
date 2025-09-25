@@ -29,7 +29,7 @@
 				<switch :color="getTheme()" style="transform:scale(0.7);margin-right: -20rpx;" :checked="balanceType" @change="switch2Change" />
 			</view>
 		</view>
-		<view class="bottom-btn" @click="submit"><button type="default">立即支付</button></view>
+		<view class="bottom-btn" @click="openSubmit"><button type="default">立即支付</button></view>
 		<password-input :show="showPasswordModal" @close="showPasswordModal = false" @confirm="onPasswordConfirm"></password-input>
 	</view>
 </template>
@@ -53,7 +53,7 @@ export default {
 			pay_type: 20,
 			checkedPay: [],
 			payPrice: '',
-			isHedui: true,
+			userInfo:{},
 			showPasswordModal: false
 		};
 	},
@@ -72,6 +72,7 @@ export default {
 	},
 	onLoad(e) {
 		let self = this;
+
 		// #ifdef MP
 		wx.enableAlertBeforeUnload({
 			message: '您的订单如在规定时间内未支付将被取消，请尽快完成支付',
@@ -91,6 +92,15 @@ export default {
 			this.order_type = e.order_type;
 		}
 		this.getData();
+
+	},
+	onShow(){
+		let self = this;
+
+		self._get('user.index/setting', {}, function(res) {
+					self.userInfo = res.data.userInfo;
+					uni.hideLoading();
+		});
 	},
 	onBackPress(options) {
 		if (this.order_type != 20 &&this.order_type != 30 && this.order_type != 40) {
@@ -193,12 +203,34 @@ export default {
 		switch2Change(e) {
 			this.balanceType = e.detail.value;
 		},
+
+		openSubmit(){
+
+			if(this.userInfo.pay_password_status===0 && this.balanceType){
+					uni.showModal({
+						title:'支付密码未设置',
+						confirmText:'前往设置',
+						success(res) {
+						if(res.confirm){
+							uni.navigateTo({
+								url:'/pages/user/set/set'
+							})
+						}	
+						}
+					})
+					return
+				}
+
+			if (this.balanceType) {
+				this.showPasswordModal = true;
+			
+			}else{
+				this.submit()
+			}
+		},
+
 		submit() {
 			let self = this;
-			if (this.balanceType && this.isHedui) {
-				this.showPasswordModal = true;
-				return;
-			}
 			self.loading = true;
 			uni.showLoading({
 				title: '加载中'
@@ -241,7 +273,7 @@ export default {
 			};
 			self._post('user.user/checkPayPassword', params, function(res) {
 				self.showSuccess('核对成功');
-				
+				self.submit()
 			});
 		},
 		paySuccess(result) {

@@ -18,7 +18,7 @@
     }
   },
   "compileType": "miniprogram",
-  "libVersion": "3.10.0",
+  "libVersion": "",
   "appid": "wx4fa39d61c8889a25",
   "projectname": "舒服康智能穿戴",
   "condition": {

@@ -10,7 +10,9 @@
 			<!-- #endif -->
 			<view class="card-top">
 				<view class="f60 white"><text class="f36">￥</text>{{balance}}</view>
-				<view class="f26 white pr">账户积分(元) <text  v-if="cash_open" class="cash_btn ml20 f22" @click="gotoPage('/pages/user/cash/apply')">提现</text></view>
+				<view class="f26 white pr">账户积分(元) 
+		<!-- 		<text  v-if="cash_open" class="cash_btn ml20 f22" @click="gotoPage('/pages/user/cash/apply')">提现</text> -->
+				</view>
 			</view>
 			
 		</view>
@@ -23,28 +25,49 @@
 							<image class="wallet_img" src="../../../static/icon/chongzhijiaofei.png" mode=""></image>
 						</view>
 						<view class="f26 gray6">充值</view>
-						<view class="icon iconfont icon-jiantou"></view>
+				
 					</view>
 					<view class="none_line"></view>
-					<view class="width-150 font-30 pr flex-1" @click="gotoList('rechange')">
+					<view class="width-150 font-30 pr flex-1"   @click="handleTransaction">
+						<view>
+							<image class="wallet_img" src="../../../static/icon/icon-icon.png" mode=""></image>
+						</view>
+						<view class="f26 gray6">积分转账</view>
+						
+					</view>
+					
+					<view class="none_line"></view>
+					<view 	v-if="cash_open" class="width-150 font-30 pr flex-1" @click="gotoPage('/pages/user/cash/apply')">
 						<view>
 							<image class="wallet_img" src="../../../static/icon/chongzhijilu.png" mode=""></image>
 						</view>
-						<view class="f26 gray6">充值记录</view>
-						<view class="icon iconfont icon-jiantou"></view>
+						<view class="f26 gray6">提现</view>
+					
 					</view>
+		
+					
 				</view>
 			</view>
+
 			<view class="index-body">
-				<view class="body-head">
+				<view class="body-head" @click="gotoList('rechange')">
+					<view class="f30">充值记录</view>
+					<view class="f26 gray9" > <text class="icon iconfont icon-jiantou" style="color: #999999;font-size: 22rpx;"></text></view>
+				</view>
+			</view>
+			
+
+			<view class="index-body" @click="gotoPage('/pages/user/cash/list')">
+				<view class="body-head" >
 					<view class="f30">积分提现明细</view>
-					<view class="f26 gray9" @click="gotoPage('/pages/user/cash/list')">更多明细 <text class="icon iconfont icon-jiantou" style="color: #999999;font-size: 22rpx;"></text></view>
+					<view class="f26 gray9" > <text class="icon iconfont icon-jiantou" style="color: #999999;font-size: 22rpx;"></text></view>
 				</view>
 			</view>
-			<view class="index-body">
+
+			<view class="index-body" @click="gotoList('all')">
 				<view class="body-head">
 					<view class="f30">钱包明细</view>
-					<view class="f26 gray9" @click="gotoList('all')">更多明细 <text class="icon iconfont icon-jiantou" style="color: #999999;font-size: 22rpx;"></text></view>
+					<view class="f26 gray9" > <text class="icon iconfont icon-jiantou" style="color: #999999;font-size: 22rpx;"></text></view>
 				</view>
 				<view class="body-item" v-for="(item,index) in dataList" :key="index">
 					<view class="body-item-top">
@@ -57,12 +80,20 @@
 					</view>
 				</view>
 			</view>
+
+			<view class="index-body" @click="gotoPage('/pages/user/my-coupon/my-coupon')">
+				<view class="body-head">
+					<view class="f30">优惠券</view>
+					<view class="f26 gray9" > <text class="icon iconfont icon-jiantou" style="color: #999999;font-size: 22rpx;"></text></view>
+				</view>
+			</view>
+
 		</view>
-		<view style="margin: 20rpx;">
-			<view style="width: 200rpx; height: 80rpx;background-color:#f86125 ;line-height: 80rpx;text-align: center;font-size: 32rpx;color: #fff;border-radius: 30rpx;" @click="handleTransaction">
+		<!-- <view style="margin: 20rpx;">
+			<view style="width: 200rpx; height: 80rpx;background-color:#f86125 ;line-height: 80rpx;text-align: center;font-size: 32rpx;color: #fff;border-radius: 30rpx;" >
 				积分转账
 			</view>
-		</view>
+		</view> -->
 		
 	</view>
 </template>

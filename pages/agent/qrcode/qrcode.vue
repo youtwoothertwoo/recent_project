@@ -1,16 +1,22 @@
 <template>
 	<view class="qrcode">
-		<image :src="qrcode_url" mode="widthFix"></image>
-		<view style="margin: 100rpx 40rpx;">
-			<radio-group style="display: flex;justify-content: space-between;text-align: center;" @change="radioChange">
-				<label class="uni-list-cell uni-list-cell-pd" v-for="(item, index) in items" :key="item.value">
-					<view>
-						<radio :value="item.value" :checked="index === current" />
-					</view>
-					<view style="margin-top: 20rpx;">{{item.name}}</view>
-				</label>
-			</radio-group>
+		<swiper class="swiper" @change="swiperChange" :current="current">
+			<swiper-item v-for="(url, index) in qrcodes" :key="index">
+				<view class="swiper-item">
+					<image :src="url"></image>
+				</view>
+			</swiper-item>
+		</swiper>
+
+		<view class="dots">
+			<view
+				class="dot"
+				:class="{ active: index === current }"
+				v-for="(item, index) in items"
+				:key="item.value"
+			></view>
 		</view>
+
 		<view class="btns-wrap">
 			<!-- #ifdef MP || APP-PLUS -->
 			<button class="btn-red" type="default" @click="savePosterImg">保存图片</button>
@@ -18,7 +24,6 @@
 			<!-- #ifdef H5 -->
 			<view class="f34 tc ww100" type="default">长按保存图片</view>
 			<!-- #endif -->
-
 		</view>
 	</view>
 </template>
@@ -27,7 +32,8 @@
 	export default {
 		data() {
 			return {
-				qrcode_url: '',
+				qrcodes: [],
+				mapName:['qrcode1', 'qrcode2', 'qrcode3'],
 				items:[
 					{
 						value:0,
@@ -43,50 +49,56 @@
 					},
 				],
 				current:0,
-				qrcode:'qrcode1'
 			}
 		},
 		mounted() {
 			/*获取数据*/
-			this.getData();
+			this.getAllData();
 		},
 		methods: {
-
 			/*获取数据*/
-			getData() {
+			getAllData() {
 				let self = this;
 				uni.showLoading({
 					title: '加载中',
 				});
 				let source = self.getPlatform();
+                // const options = ['qrcode1', 'qrcode2', 'qrcode3'];
+				
+				
 				self._get('plus.agentnew.qrcode/poster', {
-					source: source,
-					option: this.qrcode
+				    source: source,
 				}, function(data) {
 					uni.hideLoading();
-					self.qrcode_url = data.data.qrcode;
+					self.qrcodes = data.data.qrcode
+				}, function(err) {
+				    uni.hideLoading();
+				    uni.showToast({
+				        title: '加载失败',
+				        icon: 'none'
+				    });
 				});
+				
 			},
-			radioChange(e){
-				console.log(e)
-				if(e.detail.value==='0'){
-					this.qrcode='qrcode1'
-				}else if(e.detail.value==='1'){
-					this.qrcode='qrcode2'
-				}else if(e.detail.value==='2'){
-					this.qrcode='qrcode3'
-				}
-				this.getData()
+			swiperChange(e){
+				this.current = e.detail.current;
 			},
 			/*保存图片*/
 			savePosterImg() {
 				let self = this;
+                if (!self.qrcodes[self.mapName[self.current]]) {
+                    uni.showToast({
+                        title: '图片不存在',
+                        icon: 'none'
+                    });
+                    return;
+                }
 				uni.showLoading({
 					title: '加载中'
 				});
 				// 下载海报图片
 				uni.downloadFile({
-					url: self.qrcode_url,
+					url: self.qrcodes[self.mapName[self.current]],
 					success(res) {
 						uni.hideLoading();
 						// 图片保存到本地
@@ -98,8 +110,6 @@
 									icon: 'success',
 									duration: 2000
 								});
-								// 关闭商品海报
-								self.isCreatedImg = false;
 							},
 							fail(err) {
 								console.log(err.errMsg);
@@ -126,10 +136,51 @@
 </script>
 
 <style>
-	.qrcode {}
+	.qrcode {
+		height: calc(100vh - 88rpx);
+	}
 
-	.qrcode image {
+	.swiper {
 		width: 100%;
+		height: 100%;
+	}
+
+	.swiper-item {
+		display: flex;
+		justify-content: center;
+	
+		width: 100%;
+		height: 100%;
+	}
+
+	.swiper-item image {
+		width: 100%;
+		height:auto;
+		object-fit: contain;
+	}
+
+	.dots {
+		position:absolute;
+		top:80%;
+		left:50%;
+		display: flex;
+		justify-content: center;
+		transform:translateX(-50%);
+		
+
+	}
+
+	.dot {
+		width: 16rpx;
+		height: 16rpx;
+		border-radius: 50%;
+		background-color: #ccc;
+		margin: 0 10rpx;
+		transition: background-color 0.3s;
+	}
+
+	.dot.active {
+		background-color: #333;
 	}
 
 	.btns-wrap {
@@ -139,7 +190,7 @@
 		bottom: 0;
 		left: 0;
 		display: flex;
-		z-index: 10;
+		z-index: 99;
 	}
 
 	.btns-wrap .btn-red {

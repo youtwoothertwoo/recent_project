@@ -39,7 +39,7 @@
 						<view class="item" v-for="(item,index) in listData" :key="index"
 							@click="gotoList(item.category_id)">
 							<image :src="hasImages(item)" mode="aspectFit"></image>
-							<text>{{item.name}}</text>
+							<text style="font-size: 18px; font-weight: 600;">{{item.name}}</text>
 						</view>
 					</view>
 				</scroll-view>
@@ -249,14 +249,14 @@
 
 	.cotegory-type-2 .list .item {
 		padding: 0 16rpx;
-		width: 200rpx;
-		height: 300rpx;
+		width: 300rpx;
+		height: 350rpx;
 		font-size: 28rpx;
 	}
 
 	.cotegory-type-2 .list .item image {
-		width: 180rpx;
-		height: 180rpx;
+		width: 230rpx;
+		height: 230rpx;
 		margin-bottom: 20rpx;
 	}
 

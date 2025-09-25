@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "收银台",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "password-input": "/components/password-input/password-input"
+  }
 }

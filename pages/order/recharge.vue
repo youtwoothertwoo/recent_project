@@ -2,24 +2,24 @@
 	<view  :data-theme='theme()' :class="theme() || ''" class="index" v-if="!loading">
 		<view class="index-head">
 			<view class="index-head-top">
-				<view class="f32">请选择充值金额:</view>
+				<view class="f32">请输入您要充值的金额:</view>
 			</view>
-			<view class="index-head-bottom">
+	<!-- 		<view class="index-head-bottom">
 				<view :class="active==index?'index-head-bottom-item-active':'index-head-bottom-item'" @click="select(index)" v-for="(item,index) in tableData"
 				 :key="index">
 					<text class="f40">{{item.money}}</text><text class="f22">元</text>
 					<view class="givemoney" v-if="item.give_money > 0">送{{item.give_money}}元</view>
 				</view>
 			</view>
-			<view class="head-top-botm">注：充值金额只能消费，不能提现;</view>
+			<view class="head-top-botm">注：充值金额只能消费，不能提现;</view> -->
 		</view>
 		<view class="index-body">
 			<template v-if="settings.is_plan == 1">
-				<view class="index-head-top">
+				<!-- <view class="index-head-top">
 					<view class="f32 p-0-20">可自定义充值金额:</view>
-				</view>
+				</view> -->
 				<view class="index-body-top" @click="select(-1)">
-					<view class="">其他金额</view>
+			<!-- 		<view class="">其他金额</view> -->
 					<input type="text" v-model="user_money" placeholder="请输入您要充值的金额" />
 				</view>
 				<view class="gray p-0-30">最低充值金额：{{settings.min_money}}元</view>
@@ -263,7 +263,7 @@
 
 	.index-body-top input {
 		width: 80%;
-		text-align: right;
+/* 		text-align: right; */
 	}
 
 	.index-body-bottom {

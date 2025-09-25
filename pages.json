@@ -1177,7 +1177,23 @@
 			}
 
 		}]
-	}],
+	},
+	{
+		"root": "pages/fenxiao",
+		"pages": [{
+			"path": "index",
+			"style": {
+				"navigationBarTitleText": "代理申请",
+	
+				"app-plus": {
+					//#ifdef H5
+					"titleNView": false
+					//#endif
+				}
+			}
+		}]
+	}
+],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

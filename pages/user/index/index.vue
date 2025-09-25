@@ -33,24 +33,33 @@
 				<!--我的订单-->
 				<view class="my-order">
 					<view class="list d-a-c flex-1">
-						<view class="item d-c-c d-c" @click="jumpPage('/pages/user/my-wallet/my-wallet')">
+						<!-- <view class="item d-c-c d-c" @click="jumpPage('/pages/user/my-wallet/my-wallet')">
 							<view class=" red_mini">{{ detail.balance }}</view>
 							<text class="pt16 f24 gray3">账号积分</text>
-						</view>
+						</view> -->
 					<!-- 	<view class="item order_center d-c-c d-c" @click="jumpPage('/pages/user/points/points')">
 							<view class=" red_mini">{{ detail.points }}</view>
 							<text class="pt16 f24 gray3">{{points_name()}}</text>
 						</view> -->
-						<view class="item d-c-c d-c" @click="jumpPage('/pages/user/my-coupon/my-coupon')">
+						<view class="item d-c-c d-c" @click="jumpPage('/pages/user/my-wallet/my-wallet')">
+								<view class="icon-box"><span class="icon iconfont icon-qianbao"></span></view>
+								<text class="f28">钱包</text>
+						</view>
+						<view class="item d-c-c d-c" @click="jumpPage('/pages/user/set/set')">
+								<view class="icon-box"><span class="icon iconfont icon-shezhi"></span></view>
+								<text class="f28">设置</text>
+						</view>
+			
+						<!-- <view class="item d-c-c d-c" @click="jumpPage('/pages/user/my-coupon/my-coupon')">
 							<view class="red_mini">{{ coupon }}</view>
 							<text class="pt16 f24 gray3">优惠券</text>
-						</view>
-						<view v-if="setting.balance_open==1">
+						</view> -->
+						<!-- <view v-if="setting.balance_open==1">
 							<view class="item d-c-c d-c" @click="jumpPage('/pages/user/my-wallet/my-wallet')">
 								<view class="icon-box"><span class="icon iconfont icon-qianbao"></span></view>
 								<text>我的钱包</text>
 							</view>
-						</view>
+						</view> -->
 					</view>
 				</view>
 			</view>
@@ -77,21 +86,28 @@
 							<image src="../../../static/icon/icon-icon.png" mode=""></image>
 							<text class="dot d-c-c" v-if="orderCount.payment != null && orderCount.payment > 0">{{ orderCount.payment }}</text>
 						</view>
-						<text>待付款</text>
+						<text class="f28">待付款</text>
 					</view>
 					<view class="item" @click="jumpPage('/pages/order/myorder?dataType=delivery')">
 						<view class="icon-box pr">
 							<image src="../../../static/icon/icon-daifahuo.png" mode=""></image>
 							<text class="dot d-c-c" v-if="orderCount.delivery != null && orderCount.delivery > 0">{{ orderCount.delivery }}</text>
 						</view>
-						<text class="">待发货</text>
+						<text class="f28">待发货</text>
 					</view>
 					<view class="item" @click="jumpPage('/pages/order/myorder?dataType=received')">
 						<view class="icon-box pr">
 							<image src="../../../static/icon/icon-daishouhuo.png" mode=""></image>
 							<text class="dot d-c-c" v-if="orderCount.received != null && orderCount.received > 0">{{ orderCount.received }}</text>
 						</view>
-						<text>待收货</text>
+						<text class="f28">待收货</text>
+					</view>
+					<view class="item" @click="jumpPage(`/pages/plus/chat/chat?user_id=${storeDetail.supplier_user_id}&shop_supplier_id=2&nickName=舒服康`)">
+						<view class="icon-box pr" >
+							<!-- <image src="../../../static/icon/icon-daishouhuo.png" mode=""></image> -->
+							<text class="iconfont icon-kefu" style="margin-bottom: 10px;"></text>
+						</view>
+						<text class="f28">客服</text>
 					</view>
 				<!-- 	<view class="item" @click="jumpPage('/pages/order/myorder?dataType=comment')">
 						<view class="icon-box pr">
@@ -115,12 +131,16 @@
 				<view class="my-assets-all p-0-30">
 					<view class="f30 fb">我的服务</view>
 				</view>
-				<view class="group-bd f-w">
+				<view class="group-bd f-w ">
 					<view :class="'item ' + item.icon + '-box'" v-for="(item, index) in menus" :key="index" @click="jumpPage(item.link_url)">
-						<view class="icon-round d-c-c">
-							<image class="icon-round" :src="item.image_url" mode=""></image>
+						<view class="left">
+							<view class="icon-round d-c-c">
+								<image class="icon-round" :src="item.image_url" mode=""></image>
+							</view>
+							<text class="name ">{{ item.title }}</text>
 						</view>
-						<text class="name">{{ item.title }}</text>
+						
+						<!-- <text class="icon iconfont icon-jiantou" style="color: #999999;font-size: 22rpx;"></text> -->
 					</view>
 				</view>
 			</view>
@@ -166,7 +186,8 @@
 				setting: {},
 				user_type: '', //用户状态
 				msgcount: 0, //用户未读消息
-				sessionKey: ''
+				sessionKey: '',
+				storeDetail:{}
 			};
 		},
 		onPullDownRefresh() {
@@ -176,7 +197,8 @@
 		onShow() {
 			/*获取个人中心数据*/
 			this.getData();
-			this.getTabBarLinks(); 
+			this.getTabBarLinks();
+			this.fetchStore() 
 		},
 		onLoad(){
 			let self = this;
@@ -194,6 +216,20 @@
 			//#endif
 		},
 		methods: {
+
+			/*获取商户信息*/
+			fetchStore(){
+				let self = this;
+				self._get(
+					'supplier.index/index', {
+						shop_supplier_id: 2,
+						visitcode: self.getVisitcode()
+					},
+					function(res) {
+						self.storeDetail=res.data.detail;
+					}
+				);
+			},
 			/*获取数据*/
 			getData() {
 				let self = this;
@@ -486,18 +522,22 @@
 
 	.menu-wrap .group-bd {
 		display: flex;
-		justify-content: flex-start;
-		align-items: flex-start;
+		// flex-direction: column;
 	}
-
-	.menu-wrap .item {
+	.menu-wrap .item{
 		display: flex;
-		justify-content: center;
+		justify-content: space-between;
+		align-items: center;
+		// margin-bottom: 32rpx;
+	}
+	.menu-wrap .item .left {
+		display: flex;
+		gap: 16rpx;
+		font-size: 24rpx;
 		align-items: center;
 		flex-direction: column;
 		width: 142rpx;
 		height: 150rpx;
-		font-size: 24rpx;
 	}
 
 	.menu-wrap .icon-round {
@@ -512,7 +552,7 @@
 	}
 
 	.menu-wrap .item .name {
-		margin-top: 19rpx;
+		// margin-top: 19rpx;
 	}
 
 	.bind_phone {

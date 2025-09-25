@@ -23,7 +23,7 @@
 			<view class="d-b-c p-30-0 border-b">
 				<text class="key-name">会员ID</text>
 				<view class="d-e-c">
-					<text class="mr20">{{ userInfo.user_id }}</text>
+					<text class="mr20">{{ userInfo.suiji_id }}</text>
 				</view>
 			</view>
 			<view class="d-b-c p-30-0 border-b">
@@ -40,13 +40,22 @@
 					<text class="icon iconfont icon-jiantou"></text>
 				</view>
 			</view>
-			<view class="d-b-c p-30-0 border-b" v-if="userInfo.pay_password_status===1">
+			
+<!-- 			<view class="d-b-c p-30-0 border-b">
+				<text class="key-name">重置支付密码</text>
+				<view class="d-e-c">
+						
+					<text class="icon iconfont icon-jiantou"></text>
+				</view>
+			</view> -->
+			
+		<!-- 	<view class="d-b-c p-30-0 border-b" v-if="userInfo.pay_password_status===1">
 				<text class="key-name">核对支付密码</text>
 				<view class="d-e-c" @click="hedui">
 					<text class="mr20">******</text>
 					<text class="icon iconfont icon-jiantou"></text>
 				</view>
-			</view>
+			</view> -->
 			<view class="d-b-c p-30-0">
 				<text class="key-name">手机号码</text>
 				<view class="d-e-c" v-if="userInfo.mobile">
@@ -96,47 +105,28 @@
 				</view>
 			</form>
 		</Popup>
-		<Popup :show="isOpen" type="bottom" :width="750" :padding="0" @hidePopup="handleClose">
-			<form @submit="subPsd" class="ww100">
-				<view class="d-s-s d-c p20 mpservice-wrap">
+		<Popup :show="isOpen" type="middle" :width="750" :padding="0"   @hidePopup="handleClose">
+			<form @submit="subPsd" class="ww100" >
+				<view class="d-s-s d-c p20 mpservice-wrap" >
 					<view class="tc f32 fb ww100">{{userInfo.pay_password_status===1?'修改支付密码':'设置支付密码'}}</view>
 					<template>
 						<view class="pop-input">
 							<!-- #ifdef MP-WEIXIN -->
-							<input style="background-color: #e7e7e7;" v-if="userInfo.pay_password_status===1" name="oldPsd" placeholder="请输入旧密码" :value="oldPsd" @input="changeOldPsd" />
-							<input style="background-color: #e7e7e7;" name="newPsd" placeholder="请输入新密码" :value="newPsd" @input="changePsd" />
+							<input style="background-color: none;" v-if="userInfo.pay_password_status===1" type="password" :maxlength="max_length" name="oldPsd" placeholder="请输入旧密码" :value="oldPsd" @input="changeOldPsd" />
+							<input style="background-color: none;" name="newPsd" placeholder="请输入新密码" type="password" :maxlength="max_length" :value="newPsd" @input="changePsd" />
+							<input style="background-color: none;" name="confirmPsd" placeholder="请再次输入新密码" type="password" :maxlength="max_length" :value="confirmPsd" @input="changeConfirmPsd" />
 							<!-- #endif -->
 							<!-- #ifndef MP-WEIXIN -->
-							<input v-if="userInfo.pay_password_status===1" type="text" name="oldPsd" placeholder="请输入旧密码" :value="old" @input="changeOldPsd" />
-							<input type="text" name="newPsd" class="flex-1" placeholder="请输入新密码" :value="newPsd" @input="changePsd" />
+							<input  style="background-color: none;" v-if="userInfo.pay_password_status===1" type="password" name="oldPsd" :maxlength="max_length" placeholder="请输入旧密码" :value="oldPsd" @input="changeOldPsd" />
+							<input  style="background-color: none;" type="password" name="newPsd" class="flex-1" placeholder="请输入新密码" :maxlength="max_length" :value="newPsd" @input="changePsd" />
+							<input  style="background-color: none;" type="password" name="confirmPsd" class="flex-1" placeholder="请再次输入新密码" :maxlength="max_length" :value="confirmPsd" @input="changeConfirmPsd" />
 							<!-- #endif -->
 							<!-- <view class="icon-guanbi icon iconfont" @click="clearPsd"></view> -->
 						</view>
+						<span style="font-size: 12px;margin-bottom: 30rpx;color: #999;">注意：请输入{{max_length}}位数字组合</span>
 					</template>
 					<view class="d-a-c ww100">
 						<button class="btn-gray-border" @click="handleClose">取消</button>
-						<button class="theme-btn" form-type="submit">确认</button>
-					</view>
-				</view>
-			</form>
-		</Popup>
-		<Popup :show="isShow" type="bottom" :width="750" :padding="0" @hidePopup="heduiClose">
-			<form @submit="subhd" class="ww100">
-				<view class="d-s-s d-c p20 mpservice-wrap">
-					<view class="tc f32 fb ww100">核对密码</view>
-					<template>
-						<view class="pop-input d-b-c">
-							<!-- #ifdef MP-WEIXIN -->
-							<input name="hdPsd" class="flex-1" placeholder="请输入" :value="hdPsd" @input="heduiPsd" />
-							<!-- #endif -->
-							<!-- #ifndef MP-WEIXIN -->
-							<input type="text" name="hdPsd" class="flex-1" placeholder="请输入" :value="hdPsd" @input="heduiPsd" />
-							<!-- #endif -->
-							<view class="icon-guanbi icon iconfont" @click="clearHdPsd"></view>
-						</view>
-					</template>
-					<view class="d-a-c ww100">
-						<button class="btn-gray-border" @click="hidePopupFunc">取消</button>
 						<button class="theme-btn" form-type="submit">确认</button>
 					</view>
 				</view>
@@ -165,10 +155,12 @@ export default {
 			newName: '',
 			newPsd:'',
 			oldPsd:'',
+			confirmPsd: '',
 			hdPsd:'',
 			type: '',
 			version_no: '',
-			imageList: []
+			imageList: [],
+			max_length:6
 		};
 	},
 	onShow() {
@@ -344,10 +336,11 @@ export default {
 		hedui(){
 			this.isShow=true
 		},
-		handleClose(){
-			this.newPsd=''
-			this.oldPsd=''
-			this.isOpen=false
+		handleClose() {
+			this.newPsd = '';
+			this.oldPsd = '';
+			this.confirmPsd = '';
+			this.isOpen = false;
 		},
 		heduiClose(){
 			this.hdPsd=''
@@ -356,20 +349,47 @@ export default {
 		changePsd(e){
 			this.newPsd=e.detail.value
 		},
-		changeOldPsd(e){
-			this.oldPsd=e.detail.value
+		changeOldPsd(e) {
+			this.oldPsd = e.detail.value;
+		},
+		changeConfirmPsd(e) {
+			this.confirmPsd = e.detail.value;
 		},
 		heduiPsd(e){
 			this.hdPsd=e.detail.value
 		},
-		subPsd(){
-			let self =this
-			
+
+		 getPrevRoute() {
+			const pages = getCurrentPages()          // 页面栈，数组，最后一个为当前页
+			if (pages.length < 2) return null       // 没有上一页
+			const prevPage = pages[pages.length - 2] // 上一页实例
+			return {
+				route : prevPage.route || prevPage.__route__, // 页面路径（不带参数）
+				options: prevPage.options || {}               // 页面 onLoad 接收的参数
+			}
+		},
+
+		subPsd() {
+			let self = this;
+			if (self.newPsd == '') {
+				self.showError('请输入密码');
+				return;
+			}
+			if (self.newPsd.length < self.max_length) {
+				self.showError('请输入' + self.max_length + '位密码');
+				return;
+			}
+			if (self.newPsd != self.confirmPsd) {
+				self.showError('两次输入的密码不一致');
+				return;
+			}
 			uni.showLoading({
 				title: '加载中'
 			});
-			if(this.userInfo.pay_password_status===0){
-				let params={pay_password:this.newPsd}
+			if (this.userInfo.pay_password_status === 0) {
+				let params = {
+					pay_password: this.newPsd
+				};
 				self._post('user.user/setPayPassword', params, function(res) {
 					self.showSuccess(
 						'设置成功',
@@ -377,7 +397,12 @@ export default {
 							self.loading = false;
 							self.isOpen = false;
 							uni.hideLoading();
+							self.userInfo.pay_password_status = 1;
 							self.getData();
+							const prev = self.getPrevRoute()
+							if (prev && prev.route === 'pages/order/cashier') {
+								uni.navigateBack();
+							}
 						},
 						function(err) {
 							uni.hideLoading();
@@ -385,8 +410,8 @@ export default {
 							self.isPopup = false;
 						}
 					);
-				});	
-			}else{
+				});
+			} else {
 				let params={
 					pay_password_new:this.newPsd,
 					pay_password_old:this.oldPsd
@@ -409,29 +434,9 @@ export default {
 				});
 			}
 		},
-		subhd(){
-			let self =this
-			uni.showLoading({
-				title: '加载中'
-			});
-			let params={pay_password:this.hdPsd}
-			self._post('user.user/checkPayPassword', params, function(res) {
-				self.showSuccess(
-					'核对成功',
-					function() {
-						self.loading = false;
-						self.isShow = false;
-						uni.hideLoading();
-						self.getData();
-					},
-					function(err) {
-						uni.hideLoading();
-						self.loading = false;
-						self.isShow = false;
-					}
-				);
-			});	
-		}
+
+		
+
 	}
 };
 </script>
@@ -499,13 +504,13 @@ export default {
 	width: 100%;
 	margin: 26rpx 0;
 	box-sizing: border-box;
-	border-bottom: 2rpx solid #d9d9d9;
+
 }
 
 .pop-input input {
 	width: 100%;
-	padding-left: 15rpx;
-
+	margin:  0 20rpx;
+	border-bottom: 1px #dedede solid;
 	font-size: 26rpx;
 	color: #333333;
 	margin: 16rpx 0;

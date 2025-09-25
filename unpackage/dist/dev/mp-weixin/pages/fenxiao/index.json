@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "代理申请",
+  "usingComponents": {
+    "upload": "/components/upload/upload",
+    "mpvue-city-picker": "/components/mpvue-citypicker/mpvueCityPicker"
+  }
+}

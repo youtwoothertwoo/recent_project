@@ -2,10 +2,10 @@
 	<view>
 
 		<view class="index-body">
-			<view class="index-body-top">
+			<!-- <view class="index-body-top">
 				<view class="">用户ID</view>
 				<input type="text" v-model="formData.user_id" placeholder="请输入您要转账的用户ID" />
-			</view>
+			</view> -->
 			<view class="index-body-top" >
 				<view class="">
 					<view class="">转账金额</view>
@@ -38,7 +38,7 @@
 		data() {
 			return {
 				formData: {
-					user_id: '',
+					// user_id: '',
 					amount: '',
 					pay_password: '',
 					mobile:'',
@@ -51,13 +51,13 @@
 		},
 		methods: {
 			payFunc() {
-				if (this.formData.user_id === '') {
-					uni.showToast({
-						title: '请填写用户ID',
-						icon: 'none'
-					})
-					return
-				}
+				// if (this.formData.user_id === '') {
+				// 	uni.showToast({
+				// 		title: '请填写用户ID',
+				// 		icon: 'none'
+				// 	})
+				// 	return
+				// }
 				if (this.formData.amount === '') {
 					uni.showToast({
 						title: '请填写转账金额',
@@ -65,7 +65,7 @@
 					})
 					return
 				}
-				this.formData.user_id = Number(this.formData.user_id)
+				// this.formData.user_id = Number(this.formData.user_id)
 				this.formData.amount = Number(this.formData.amount)
 				console.log(this.formData)
 				if (this.formData.mobile === '') {

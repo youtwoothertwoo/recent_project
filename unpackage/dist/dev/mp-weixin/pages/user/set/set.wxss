@@ -100,11 +100,11 @@
   width: 100%;
   margin: 26rpx 0;
   box-sizing: border-box;
-  border-bottom: 2rpx solid #d9d9d9;
 }
 .pop-input input {
   width: 100%;
-  padding-left: 15rpx;
+  margin: 0 20rpx;
+  border-bottom: 1px #dedede solid;
   font-size: 26rpx;
   color: #333333;
   margin: 16rpx 0;

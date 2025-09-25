@@ -113,6 +113,12 @@
         "live/live-over",
         "live/playback"
       ]
+    },
+    {
+      "root": "pages/fenxiao",
+      "pages": [
+        "index"
+      ]
     }
   ],
   "window": {

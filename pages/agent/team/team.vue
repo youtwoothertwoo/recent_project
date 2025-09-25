@@ -8,30 +8,29 @@
 				</view>
 			</view>
 
-			<view class="total p-0-30 d-c-c f24">
-				团队总人数：
-				<text class="">{{teamTotal}}</text>
-				人
+			<!-- 统计卡片：第一行 2 个，第二行 3 个 -->
+			<view class="stat-grid p-0-30">
+			<view class="stat-card span-2">
+				<text class="stat-label">团队总人数</text>
+				<text class="stat-num red">{{ teamTotal }}</text>
 			</view>
-			<view class="total p-0-30 d-c-c f24">
-				直推人数：
-				<text class="">{{zhitui_num}}</text>
-				人
+			<view class="stat-card span-2">
+				<text class="stat-label">直推人数</text>
+				<text class="stat-num red">{{ zhitui_num }}</text>
 			</view>
-			<view class="total p-0-30 d-c-c f24">
-				总业绩：
-				<text class="">{{all_money}}</text>
-				元
+
+			<view class="stat-card span-3">
+				<text class="stat-label">总业绩</text>
+				<text class="stat-num red">{{ all_money }}元</text>
 			</view>
-			<view class="total p-0-30 d-c-c f24">
-				月新增：
-				<text class="">{{month_money}}</text>
-				元
+			<view class="stat-card span-3">
+				<text class="stat-label">月新增</text>
+				<text class="stat-num red">{{ month_money }}元</text>
 			</view>
-			<view class="total p-0-30 d-c-c f24">
-				日新增：
-				<text class="">{{today_money}}</text>
-				元
+			<view class="stat-card span-3">
+				<text class="stat-label">日新增</text>
+				<text class="stat-num red">{{ today_money }}元</text>
+			</view>
 			</view>
 		</view>
 
@@ -39,7 +38,7 @@
 		<scroll-view scroll-y="true" class="scroll-Y" :style="'height:' + scrollviewHigh + 'px;'" lower-threshold="50"
 			@scrolltolower="scrolltolowerFunc">
 			<view class="p-0-30 bg-white">
-				<view class="border-b p-20-0" v-for="(item,index) in tableData" :key="index">
+				<view class="border-b p-20-0" v-for="(item,index) in tableData" :key="index" @tap = "showMemberCard(item)">
 					<view class="d-b-c">
 						<view class="agent-team-photo">
 							<image :src="item.avatarUrl" mode="aspectFill"></image>
@@ -69,14 +68,44 @@
 			</view>
 		</scroll-view>
 
+		<!-- 成员详情弹窗 -->
+		<Popup :show="isOpen" type="middle"  @hidePopup="()=> isOpen = false">
+			<view class="pop-card">
+				<view class="pop-header">
+				<text class="pop-title">成员概况</text>
+				<text class="iconfont icon-guanbi" @click="()=> isOpen = false"></text>
+				</view>
+
+				<view class="pop-body">
+				<view class="pop-row">
+					<text class="pop-label">直推人数</text>
+					<text class="pop-val">{{ popupData.zhitui || 0 }}</text>
+				</view>
+				<view class="pop-row">
+					<text class="pop-label">总业绩</text>
+					<text class="pop-val">{{ popupData.all_money || 0 }} 元</text>
+				</view>
+				<view class="pop-row">
+					<text class="pop-label">月新增</text>
+					<text class="pop-val">{{ popupData.month_money || 0 }} 元</text>
+				</view>
+				<view class="pop-row">
+					<text class="pop-label">日新增</text>
+					<text class="pop-val">{{ popupData.today_money || 0 }} 元</text>
+				</view>
+				</view>
+			</view>
+		</Popup>
 	</view>
 </template>
 
 <script>
 	import uniLoadMore from "@/components/uni-load-more.vue";
+	import Popup from '@/components/uni-popup.vue';
 	export default {
 		components: {
-			uniLoadMore
+			uniLoadMore,
+			Popup
 		},
 		data() {
 			return {
@@ -98,7 +127,9 @@
 				zhitui_num:0,
 				all_money:0,
 				month_money:0,
-				today_money:0
+				today_money:0,
+				isOpen:false,
+				popupData:{}
 			}
 		},
 		computed: {
@@ -139,6 +170,17 @@
 				});
 			},
 
+			showMemberCard(item) {
+				let self = this
+			// 这里先 mock 数据，后续换成 this._get('plus.agentnew.team/userPerf', { user_id: item.user_id }, res => {})
+			self.popupData = {
+				zhitui: item.zhitui_num,
+				all_money: item.performance.all_money,
+				month_money: item.performance.month_money,
+				today_money: item.performance.today_money
+			};
+			self.isOpen = true
+			},
 			/*获取数据*/
 			getData() {
 				let self = this;
@@ -169,14 +211,17 @@
 						});
 						self.teamTotal = res.data.list.all_num
 					}
-					if (data.setting.level == 3) {
-						self.tabList.push({
-							value: 3,
-							text: data.words.team.words.third.value,
-							total: data.agent?.third_num
-						});
-						self.teamTotal = res.data.list.all_num
-					}
+					/** 
+					 * 三级团队
+					 * */
+					// if (data.setting.level == 3) {
+					// 	self.tabList.push({
+					// 		value: 3,
+					// 		text: data.words.team.words.third.value,
+					// 		total: data.agent?.third_num
+					// 	});
+					// 	self.teamTotal = res.data.list.all_num
+					// }
 					self.tableData = self.tableData.concat(data.list[self.state_active + 1]);
 					self.last_page = data.list.last_page;
 					if (self.last_page <= 1) {
@@ -216,32 +261,163 @@
 </script>
 
 <style lang="scss">
-	.top-container .total {
-		height: 80rpx;
-		background-color: #fae1df;
-		color: #ff5649;
-		text-align: center;
-	}
+/* ========== 简洁大方版样式 ========== */
+page {
+	background-color: #f5f6fa;
+}
 
-	.agent-team-photo,
-	.agent-team-photo image {
-		width: 80rpx;
-		height: 80rpx;
-		border-radius: 50%;
-	}
+.top-container {
+	background-color: #fff;
+	border-radius: 0 0 16rpx 16rpx;
+	overflow: hidden;
+}
 
-	.tab-item {
-		font-size: 28rpx;
-	}
+/* 统计卡片：第一行 2 个，第二行 3 个 */
+.stat-grid{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 24rpx 32rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  margin: 24rpx 24rpx 0;
+}
+.stat-card{
+  background: #fafbfc;
+  border-radius: 12rpx;
+  padding: 24rpx 0;
+  margin-bottom: 16rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.stat-card.span-2{ width: 48%; }   /* 第一行 2 个 */
+.stat-card.span-3{ width: 31.5%; } /* 第二行 3 个 */
 
-	.tab-item.active {
-		font-weight: normal;
-		font-size: 28rpx;
-	}
+.stat-label{
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+.stat-num{
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+.stat-num.red{ color: #ff5649; }
 
-	.tab-item.active::after {
-		width: 57rpx;
-		height: 6rpx;
-		background-color: #ff5649;
-	}
+/* Tab 栏 */
+.top-tabbar {
+	display: flex;
+	justify-content: center;
+	padding: 24rpx 0 16rpx;
+	background: #fff;
+}
+.tab-item {
+	position: relative;
+	padding: 0 40rpx;
+	font-size: 30rpx;
+	color: #999;
+	line-height: 64rpx;
+	transition: color 0.2s;
+}
+.tab-item.active {
+	color: #ff5649;
+	font-weight: 600;
+}
+.tab-item.active::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 0;
+	width: 40rpx;
+	height: 4rpx;
+	background: #ff5649;
+	border-radius: 2rpx;
+}
+
+/* 列表卡片 */
+.scroll-Y {
+	background-color: #f5f6fa;
+}
+.p-0-30 {
+	padding: 0 32rpx;
+	background: #fff;
+	border-radius: 16rpx;
+	margin: 24rpx 24rpx 0;
+}
+.border-b {
+	padding: 32rpx 0;
+	border-bottom: 1rpx solid #f0f0f0;
+}
+.border-b:last-child {
+	border: 0;
+}
+
+/* 头像 */
+.agent-team-photo image {
+	width: 88rpx;
+	height: 88rpx;
+	border-radius: 50%;
+	border: 1rpx solid #eee;
+}
+
+/* 文字 */
+.gray3 {
+	color: #333;
+}
+.gray9 {
+	color: #999;
+}
+.f28 {
+	font-size: 30rpx;
+}
+.f24 {
+	font-size: 26rpx;
+}
+
+/* 空态 */
+.d-c-c.p30 {
+	flex-direction: column;
+	padding: 80rpx 0;
+	color: #c0c4cc;
+	font-size: 26rpx;
+}
+.d-c-c .iconfont {
+	font-size: 80rpx;
+	margin-bottom: 16rpx;
+}
+
+/* 弹窗卡片 */
+.pop-card{
+  width: 500rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 32rpx;
+}
+.pop-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+.pop-title{
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+.icon-guanbi{
+  font-size: 40rpx;
+  color: #999;
+}
+.pop-body .pop-row{
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+}
+.pop-label{ color: #666; }
+.pop-val{ color: #ff5649; font-weight: 500; }
 </style>

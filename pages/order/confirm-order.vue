@@ -701,20 +701,7 @@
 			/*提交订单*/
 			SubmitOrder() {
 				let self = this;
-				if(this.userInfo.pay_password_status===0){
-					uni.showModal({
-						title:'支付密码未设置',
-						confirmText:'前往设置',
-						success(res) {
-						if(res.confirm){
-							uni.navigateTo({
-								url:'/pages/user/set/set'
-							})
-						}	
-						}
-					})
-					return
-				}
+
 				if (self.exist_address) {
 					uni.showLoading({
 						title: '加载中',

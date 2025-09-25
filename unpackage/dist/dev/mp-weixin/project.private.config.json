@@ -3,8 +3,8 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/agent/team/team",
-          "pathName": "pages/agent/team/team",
+          "name": "pages/fenxiao/index",
+          "pathName": "pages/fenxiao/index",
           "query": "",
           "launchMode": "default",
           "scene": null
@@ -16,5 +16,6 @@
   "projectname": "舒服康智能穿戴",
   "setting": {
     "compileHotReLoad": true
-  }
+  },
+  "libVersion": "3.10.0"
 }

@@ -8,16 +8,16 @@
 			<view class="modal-body">
 				<view class="password-input-area" @click="focusInput">
 					<view class="password-boxes">
-						<view class="box" v-for="(item, index) in 6" :key="index">
+						<view class="box" v-for="(item, index) in max_length" :key="index">
 							<text v-if="password.length > index" class="dot">●</text>
 						</view>
 					</view>
 					<input
-						type="number"
+						type="password"
 						:focus="isFocus"
 						@blur="isFocus=false"
 						v-model="password"
-						:maxlength="6"
+						:maxlength="max_length"
 						class="real-input"
 					/>
 				</view>
@@ -37,7 +37,8 @@ export default {
 	data() {
 		return {
 			password: '',
-			isFocus:false
+			isFocus:false,
+			max_length:6
 		};
 	},
 	watch:{
@@ -49,7 +50,7 @@ export default {
 			}
 		},
 		password(val){
-			if (val.length === 6) {
+			if (val.length === this.max_length) {
 				this.$emit('confirm', val);
 			}
 		}
@@ -142,12 +143,12 @@ export default {
 
 	.real-input {
 		position: absolute;
+		left: -1000rpx;  // 移出屏幕
 		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
+		width: 100rpx;   // 保留一个小尺寸，避免系统优化
+		height: 100rpx;
 		opacity: 0;
-        z-index: 1;
+		font-size: 0;
 	}
 }
 </style>

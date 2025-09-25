@@ -137,8 +137,8 @@
 	}
 
 	.diy-product .product-list.column__1 .product-cover {
-		width: 240rpx;
-		height: 240rpx;
+		width: 100%;
+		height: 337.5rpx;
 		border-radius: 20rpx;
 		overflow: hidden;
 	}
@@ -248,10 +248,9 @@
 	}
 
 	.diy-product .column__2 .product-cover {
-		width: 220rpx;
-		height: 220rpx;
+		width: 100%;
+		height: 337.5rpx;
 		border-radius: 12rpx;
-		margin: 20rpx auto;
 	}
 
 	.diy-product .column__3 .product-item {
@@ -270,8 +269,8 @@
 	}
 
 	.diy-product .column__3 .product-cover {
-		width: 230rpx;
-		height: 230rpx;
+		width: 100%;
+		height: 337.5rpx;
 	}
 
 	.diy-product .display__slide .product-list {

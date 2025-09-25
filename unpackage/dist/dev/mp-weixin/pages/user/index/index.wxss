@@ -231,17 +231,20 @@ page {
 }
 .menu-wrap .group-bd {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
 }
 .menu-wrap .item {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+}
+.menu-wrap .item .left {
+  display: flex;
+  gap: 16rpx;
+  font-size: 24rpx;
   align-items: center;
   flex-direction: column;
   width: 142rpx;
   height: 150rpx;
-  font-size: 24rpx;
 }
 .menu-wrap .icon-round {
   width: 60rpx;
@@ -251,9 +254,6 @@ page {
 .menu-wrap .item .iconfont {
   font-size: 40rpx;
   color: #ffffff;
-}
-.menu-wrap .item .name {
-  margin-top: 19rpx;
 }
 .bind_phone {
   width: 100%;
