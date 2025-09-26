@@ -163,7 +163,7 @@ export default {
     /*打开弹出层查看*/
     viewClick(item) {
       this.contractModel = item;
-      console.log(item)
+      console.log(item,"current")
       this.open_view = true;
     },
     /*打开弹出层编辑*/

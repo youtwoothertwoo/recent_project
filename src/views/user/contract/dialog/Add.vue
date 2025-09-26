@@ -14,23 +14,26 @@
   >
     <el-form ref="form" :model="dataList" label-width="100px">
       <el-form-item label="姓名：">
-        <el-input v-model="form.real_name"></el-input>
+        <el-input v-model="dataList.real_name"></el-input>
       </el-form-item>
       <el-form-item label="手机：">
-        <el-input v-model="form.mobile"></el-input>
+        <el-input v-model="dataList.mobile"></el-input>
       </el-form-item>
       <el-form-item label="详细地址：">
-        <el-input v-model="form.store_address"></el-input>
+        <el-input v-model="dataList.store_address"></el-input>
       </el-form-item>
 
 
       <el-form-item label="店铺照片：">
-        <el-image
-          v-if="form.store_photos"
-          style="width: 50px; height: 50px; cursor: pointer"
-          :src="form.store_photos"
-          @click="openUpload(1)"
-        ></el-image>
+        <template  v-if="dataList.store_photos_image">
+          <el-image
+            v-for="value in dataList.store_photos_image"
+            :key="value.file_path"
+            style="width: 50px; height: 50px; cursor: pointer"
+            :src="value.file_path"
+            :preview-src-list="[value.file_path]"
+          />
+        </template>
         <i
           v-else
           class="el-icon-plus"
@@ -42,15 +45,17 @@
             line-height: 50px;
             cursor: pointer;
           "
-          @click="openUpload(1)"
+
         ></i>
       </el-form-item>
-      <el-form-item label="身份证正面：">
+
+      <el-form-item label="营业执照">
         <el-image
-          v-if="form.id_card_front"
+          v-if="dataList.business_license_image"
           style="width: 50px; height: 50px; cursor: pointer"
-          :src="form.id_card_front"
-          @click="openUpload(2)"
+          :src="dataList.business_license_image[0].file_path"
+          :preview-src-list="[dataList.business_license_image[0].file_path]"
+         
         ></el-image>
         <i
           v-else
@@ -63,15 +68,61 @@
             line-height: 50px;
             cursor: pointer;
           "
-          @click="openUpload(2)"
+        ></i>
+      </el-form-item>
+
+      <el-form-item label="合同详情：">
+        <template  v-if="dataList.contract_image">
+          <el-image
+            v-for="value in dataList.contract_image"
+            :key="value.file_path"
+            style="width: 50px; height: 50px; cursor: pointer"
+            :src="value.file_path"
+            :preview-src-list="[value.file_path]"
+          />
+        </template>
+        <i
+          v-else
+          class="el-icon-plus"
+          style="
+            width: 50px;
+            height: 50px;
+            border: 1px dashed #d9d9d9;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+          "
+
+        ></i>
+      </el-form-item>
+
+      <el-form-item label="身份证正面：">
+        <el-image
+          v-if="dataList.id_card_front_image"
+          style="width: 50px; height: 50px; cursor: pointer"
+          :src="dataList.id_card_front_image[0].file_path"
+          :preview-src-list="[dataList.id_card_front_image[0].file_path]"
+         
+        ></el-image>
+        <i
+          v-else
+          class="el-icon-plus"
+          style="
+            width: 50px;
+            height: 50px;
+            border: 1px dashed #d9d9d9;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+          "
         ></i>
       </el-form-item>
       <el-form-item label="身份证背面：">
         <el-image
-          v-if="form.id_card_back"
+          v-if="dataList.id_card_back_image"
           style="width: 50px; height: 50px; cursor: pointer"
-          :src="form.id_card_back"
-          @click="openUpload(3)"
+          :src="dataList.id_card_back_image[0].file_path"
+         :preview-src-list="[dataList.id_card_back_image[0].file_path]"
         ></el-image>
         <i
           v-else
@@ -84,28 +135,27 @@
             line-height: 50px;
             cursor: pointer;
           "
-          @click="openUpload(3)"
         ></i>
       </el-form-item>
 
 
       <el-form-item label="代理区域：">
-        <el-input v-model="form.agent_region"></el-input>
+        <el-input v-model="dataList.agent_region"></el-input>
       </el-form-item>
       <el-form-item label="店名：">
-        <el-input v-model="form.store_name"></el-input>
+        <el-input v-model="dataList.store_name"></el-input>
       </el-form-item>
       <el-form-item label="营业时间：">
-        <el-input v-model="form.shop_hours"></el-input>
+        <el-input v-model="dataList.shop_hours"></el-input>
       </el-form-item>
       <el-form-item label="是否开启门店">
-        <el-radio-group v-model="form.is_store">
+        <el-radio-group v-model="dataList.is_store">
           <el-radio :label="1">开启</el-radio>
           <el-radio :label="0">关闭</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="是否开启补贴">
-        <el-radio-group v-model="form.is_subsidy">
+        <el-radio-group v-model="dataList.is_subsidy">
           <el-radio :label="1">开启</el-radio>
           <el-radio :label="0">关闭</el-radio>
         </el-radio-group>
@@ -153,7 +203,7 @@ export default {
   },
   mounted() {
     PlusApi.editContract({ apply_id: this.form.apply_id }, true).then((res) => {
-      console.log(res.data.model);
+     
       this.dataList = res.data.model;
     });
   },
@@ -161,7 +211,8 @@ export default {
     /*修改用户*/
     editApplyStatus() {
       let self = this;
-      let params = this.form;
+      let params = this.dataList;
+
       PlusApi.editContract1(params, true)
         .then(data => {
           self.$message({
