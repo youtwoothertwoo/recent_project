@@ -132,16 +132,31 @@
 					<view class="f30 fb">我的服务</view>
 				</view>
 				<view class="group-bd f-w ">
-					<view :class="'item ' + item.icon + '-box'" v-for="(item, index) in menus" :key="index" @click="jumpPage(item.link_url)">
-						<view class="left">
-							<view class="icon-round d-c-c">
-								<image class="icon-round" :src="item.image_url" mode=""></image>
+					<view v-for="(item, index) in menus" :key="item.menu_id">
+						<view v-if="item.menu_id !==18" :class="'item ' + item.icon + '-box'"   @click="jumpPage(item.link_url)">
+							<view class="left">
+								<view class="icon-round d-c-c">
+									<image class="icon-round" :src="item.image_url" mode=""></image>
+								</view>
+								<text class="name ">{{ item.title }}</text>
 							</view>
-							<text class="name ">{{ item.title }}</text>
+							
+							<!-- <text class="icon iconfont icon-jiantou" style="color: #999999;font-size: 22rpx;"></text> -->
 						</view>
-						
-						<!-- <text class="icon iconfont icon-jiantou" style="color: #999999;font-size: 22rpx;"></text> -->
+
+						<view v-else-if="item.menu_id === 18 && contract_status == 2" :class="'item ' + item.icon + '-box'"  @click="jumpPage(item.link_url)">
+							<view class="left">
+								<view class="icon-round d-c-c">
+									<image class="icon-round" :src="item.image_url" mode=""></image>
+								</view>
+								<text class="name ">{{ item.title }}</text>
+							</view>
+							
+							<!-- <text class="icon iconfont icon-jiantou" style="color: #999999;font-size: 22rpx;"></text> -->
+						</view>
+
 					</view>
+
 				</view>
 			</view>
 			<!--推荐-->
@@ -187,7 +202,8 @@
 				user_type: '', //用户状态
 				msgcount: 0, //用户未读消息
 				sessionKey: '',
-				storeDetail:{}
+				storeDetail:{},
+				contract_status:''
 			};
 		},
 		onPullDownRefresh() {
@@ -197,6 +213,7 @@
 		onShow() {
 			/*获取个人中心数据*/
 			this.getData();
+			
 			this.getTabBarLinks();
 			this.fetchStore() 
 		},
@@ -214,6 +231,7 @@
 				}
 			});
 			//#endif
+			self.getStatus()
 		},
 		methods: {
 
@@ -229,6 +247,13 @@
 						self.storeDetail=res.data.detail;
 					}
 				);
+			},
+			getStatus(){
+				let self = this;
+				self._get('user.index/setting',{},res =>{
+					self.contract_status = res.data.userInfo.contract_status
+					console.log(self.contract_status )
+				})
 			},
 			/*获取数据*/
 			getData() {
